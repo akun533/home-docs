@@ -34,27 +34,27 @@ docker-compose up -d --build
 
 ```bash
 # 构建镜像
-docker build -t ai-docs:latest .
+docker build -t home-docs:latest .
 
 # 运行容器
 docker run -d \
-  --name ai-docs-app \
+  --name home-docs-app \
   -p 8080:80 \
   -p 3000:3000 \
   -e NODE_ENV=production \
   -e PORT=3000 \
   -e ALLOWED_ORIGINS=http://localhost:8080 \
   -v $(pwd)/data:/app/server/db \
-  ai-docs:latest
+  home-docs:latest
 
 # 查看日志
-docker logs -f ai-docs-app
+docker logs -f home-docs-app
 
 # 停止容器
-docker stop ai-docs-app
+docker stop home-docs-app
 
 # 删除容器
-docker rm ai-docs-app
+docker rm home-docs-app
 ```
 
 ## 🔧 环境变量配置
@@ -77,7 +77,7 @@ Docker 容器配置了健康检查，每 30 秒检查一次服务状态：
 
 ```bash
 # 查看健康状态
-docker inspect --format='{{.State.Health.Status}}' ai-docs-app
+docker inspect --format='{{.State.Health.Status}}' home-docs-app
 ```
 
 ## 🌐 生产环境部署
@@ -114,33 +114,33 @@ server {
 
 ```bash
 # 进入容器
-docker exec -it ai-docs-app sh
+docker exec -it home-docs-app sh
 
 # 查看资源使用
-docker stats ai-docs-app
+docker stats home-docs-app
 
 # 清理未使用的镜像
 docker image prune -a
 
 # 导出镜像
-docker save ai-docs:latest | gzip > ai-docs.tar.gz
+docker save home-docs:latest | gzip > home-docs.tar.gz
 
 # 导入镜像
-docker load < ai-docs.tar.gz
+docker load < home-docs.tar.gz
 ```
 
 ## 📊 监控和日志
 
 ```bash
 # 实时日志
-docker-compose logs -f ai-docs
+docker-compose logs -f home-docs
 
 # Nginx 日志
-docker exec ai-docs-app tail -f /var/log/nginx/access.log
-docker exec ai-docs-app tail -f /var/log/nginx/error.log
+docker exec home-docs-app tail -f /var/log/nginx/access.log
+docker exec home-docs-app tail -f /var/log/nginx/error.log
 
 # 后端日志
-docker-compose logs -f ai-docs | grep "服务器运行"
+docker-compose logs -f home-docs | grep "服务器运行"
 ```
 
 ## ⚡ 性能优化
@@ -154,7 +154,7 @@ docker-compose logs -f ai-docs | grep "服务器运行"
 
 ### 容器无法启动
 ```bash
-docker logs ai-docs-app
+docker logs home-docs-app
 ```
 
 ### 端口冲突
@@ -167,7 +167,7 @@ ports:
 ### 数据丢失
 确保 volume 映射正确：
 ```bash
-docker inspect ai-docs-app | grep Mounts -A 10
+docker inspect home-docs-app | grep Mounts -A 10
 ```
 
 ## 📝 注意事项

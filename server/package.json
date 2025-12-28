@@ -1,5 +1,5 @@
 {
-  "name": "ai-docs-server",
+  "name": "home-docs-server",
   "version": "1.0.0",
   "description": "博客评论、点赞、访问量统计后端服务",
   "main": "app.js",

@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  ai-docs:
+  home-docs:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ai-docs:latest
-    container_name: ai-docs-app
+    image: home-docs:latest
+    container_name: home-docs-app
     ports:
       - "8080:80"
       - "3000:3000"

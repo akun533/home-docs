@@ -4,7 +4,7 @@
 # 保存为 /var/www/scripts/deploy-blog.sh
 
 BLOG_DIR="/var/www/blog"
-REPO_DIR="/var/www/repo/ai-docs"
+REPO_DIR="/var/www/repo/home-docs"
 NGINX_CONFIG="/etc/nginx/sites-available/blog"
 
 echo "================================"

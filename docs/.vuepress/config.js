@@ -12,13 +12,13 @@ export default defineUserConfig({
 
   // 主题配置
   theme: hopeTheme({
-    // 主机名
-    hostname: 'https://your-domain.com',
+    // 主机名（开发环境使用 localhost，生产环境需改为实际域名）
+    hostname: 'http://localhost:8080',
 
     // 作者信息
     author: {
       name: '博主',
-      url: 'https://your-domain.com',
+      url: 'http://localhost:8080',
       email: 'your-email@example.com',
     },
 
