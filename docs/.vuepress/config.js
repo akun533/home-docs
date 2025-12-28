@@ -149,7 +149,7 @@ export default defineUserConfig({
       // Sitemap 插件配置 - 需要有效域名才能正常工作
       sitemap: {
         // 如果是本地开发环境，可以设置为 false 禁用
-        // sitemap: false,
+        sitemap: false,
         changefreq: 'daily',
         excludeUrls: ['/404.html'],
         hostname: 'https://akun.cpolar.top',
