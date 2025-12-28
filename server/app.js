@@ -15,7 +15,7 @@ app.use(helmet());
 
 // CORS 配置
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:48080'],
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://192.168.101.6:48080'],
   credentials: true
 }));
 
@@ -57,7 +57,7 @@ app.use((req, res) => {
 
 // 启动服务器
 app.listen(PORT, () => {
-  console.log(`🚀 服务器运行在 http://localhost:${PORT}`);
+  console.log(`🚀 服务器运行在 http://192.168.101.6:${PORT}`);
   console.log(`📊 环境: ${process.env.NODE_ENV || 'development'}`);
 });
 
