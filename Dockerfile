@@ -23,15 +23,20 @@ COPY docs ./docs
 COPY add-footer-to-articles.js ./
 COPY server ./server
 
-# 创建数据库目录
-RUN mkdir -p /app/server/db && chown -R node:node /app/server/db
+# 创建必要的目录并设置权限
+RUN mkdir -p /app/server/db /app/docs/.vuepress/.temp /app/docs/.vuepress/.cache && \
+    chown -R node:node /app
 
 # 暴露端口：48080(VuePress开发服务器) 和 43000(后端API)
 EXPOSE 48080 43000
 
 # 创建启动脚本（同时启动前端开发服务器和后端）
 RUN echo '#!/bin/sh' > /app/start.sh && \
+    echo '# 清理 VuePress 缓存' >> /app/start.sh && \
+    echo 'rm -rf /app/docs/.vuepress/.temp/* /app/docs/.vuepress/.cache/*' >> /app/start.sh && \
+    echo '# 启动后端服务' >> /app/start.sh && \
     echo 'cd /app/server && node app.js &' >> /app/start.sh && \
+    echo '# 启动前端服务' >> /app/start.sh && \
     echo 'cd /app && pnpm run docs:dev -- --host 0.0.0.0 --port 48080' >> /app/start.sh && \
     chmod +x /app/start.sh
 
