@@ -161,7 +161,7 @@ docker logs home-docs-app
 修改 `docker-compose.yml` 中的端口映射：
 ```yaml
 ports:
-  - "8081:80"  # 改为其他端口
+  - "8080:80"  # 改为其他端口
 ```
 
 ### 数据丢失

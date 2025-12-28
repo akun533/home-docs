@@ -43,7 +43,7 @@ start "前端服务" cmd /k "npm run docs:dev"
 
 echo.
 echo 服务启动完成！
-echo 前端: http://localhost:8081
+echo 前端: http://localhost:8080
 echo 后端: http://localhost:3000
 echo.
 pause

@@ -15,7 +15,7 @@ app.use(helmet());
 
 // CORS 配置
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:8081'],
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:8080'],
   credentials: true
 }));
 
