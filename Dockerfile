@@ -6,12 +6,16 @@ WORKDIR /app
 # 复制前端依赖文件
 COPY package*.json ./
 
-# 安装前端依赖（包含开发依赖）
-RUN npm ci
+# 配置 npm 使用淘宝镜像源并安装前端依赖（包含开发依赖）
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm cache clean --force && \
+    npm install
 
 # 复制后端依赖文件并安装
 COPY server/package*.json ./server/
-RUN cd server && npm ci
+RUN cd server && npm config set registry https://registry.npmmirror.com && \
+    npm cache clean --force && \
+    npm install
 
 # 复制所有源码
 COPY docs ./docs
