@@ -12,14 +12,15 @@ export default defineUserConfig({
 
   // 主题配置
   theme: hopeTheme({
-    // 主机名（开发环境使用 localhost，生产环境需改为实际域名）
-    hostname: 'http://localhost:8080',
+    // 主机名(开发环境使用 localhost,生产环境需改为实际域名)
+    // 注意:sitemap 需要有效域名才能正常工作,本地开发建议禁用 sitemap
+    hostname: 'https://akun.cpolar.top',
 
     // 作者信息
     author: {
       name: '博主',
-      url: 'http://localhost:8080',
-      email: 'your-email@example.com',
+      url: 'https://akun.cpolar.top',
+      email: '122915623@qq.com',
     },
 
     // 图标库
@@ -137,6 +138,20 @@ export default defineUserConfig({
       // 组件插件
       components: {
         components: ['Badge', 'VPCard'],
+      },
+
+      // SEO 插件配置
+      seo: {
+        // 仅在有实际域名时启用
+        isArticle: (page) => page.path.startsWith('/articles/'),
+      },
+
+      // Sitemap 插件配置 - 需要有效域名才能正常工作
+      sitemap: {
+        // 如果是本地开发环境，可以设置为 false 禁用
+        // sitemap: false,
+        changefreq: 'daily',
+        excludeUrls: ['/404.html'],
       },
     },
 
