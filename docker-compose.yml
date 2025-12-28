@@ -8,12 +8,12 @@ services:
     image: home-docs:latest
     container_name: home-docs-app
     ports:
-      - "8080:80"
-      - "3000:3000"
+      - "48080:80"
+      - "43000:43000"
     environment:
       - NODE_ENV=production
-      - PORT=3000
-      - ALLOWED_ORIGINS=http://localhost:8080,http://localhost
+      - PORT=43000
+      - ALLOWED_ORIGINS=http://localhost:48080,http://localhost
     volumes:
       # 持久化数据库文件
       - ./data:/app/server/db

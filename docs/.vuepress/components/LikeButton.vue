@@ -41,7 +41,7 @@ export default {
     async loadLikeStatus() {
       const pageUrl = window.location.pathname;
       const userId = this.getUserId();
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:3000/api';
+      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
       
       try {
         const response = await fetch(
@@ -64,7 +64,7 @@ export default {
       this.isLoading = true;
       const pageUrl = window.location.pathname;
       const userId = this.getUserId();
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:3000/api';
+      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
       
       try {
         const response = await fetch(`${API_BASE}/likes/toggle`, {

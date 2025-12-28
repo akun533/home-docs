@@ -18,7 +18,7 @@ docker-compose up -d
 echo.
 echo ==========================================
 echo 更新完成！
-echo 访问地址: http://localhost:8080
+echo 访问地址: http://localhost:48080
 echo ==========================================
 echo.
 

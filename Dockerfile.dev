@@ -28,7 +28,7 @@ COPY docs/.vuepress ./docs/.vuepress
 COPY server ./server
 
 # 暴露端口
-EXPOSE 80 3000
+EXPOSE 80 43000
 
 # 创建热更新启动脚本
 RUN cat > /app/start-dev.sh <<'EOF'
@@ -59,8 +59,8 @@ node app.js &
 echo "=========================================="
 echo "开始监控文件变化..."
 echo "监控目录: /app/docs"
-echo "文档访问: http://localhost:8080"
-echo "API 服务: http://localhost:3000"
+echo "文档访问: http://localhost:48080"
+echo "API 服务: http://localhost:43000"
 echo "=========================================="
 
 # 使用 inotifywait 监控文件变化

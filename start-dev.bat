@@ -15,8 +15,8 @@ echo.
 echo ==========================================
 echo 开发环境启动成功！
 echo.
-echo 访问地址: http://localhost:8080
-echo API 服务: http://localhost:3000
+echo 访问地址: http://localhost:48080
+echo API 服务: http://localhost:43000
 echo.
 echo 功能说明:
 echo - 文档目录已映射，修改文章自动重新构建

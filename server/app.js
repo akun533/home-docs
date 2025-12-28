@@ -8,14 +8,14 @@ const likeRoutes = require('./routes/likes');
 const analyticsRoutes = require('./routes/analytics');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 43000;
 
 // 安全中间件
 app.use(helmet());
 
 // CORS 配置
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:8080'],
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:48080'],
   credentials: true
 }));
 

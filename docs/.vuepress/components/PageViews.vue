@@ -26,7 +26,7 @@ export default {
   methods: {
     async trackAndLoadViews() {
       const pageUrl = window.location.pathname;
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:3000/api';
+      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
       
       try {
         // 生成访客 ID

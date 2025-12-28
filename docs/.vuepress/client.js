@@ -19,7 +19,7 @@ export default defineClientConfig({
     if (typeof window !== 'undefined') {
       // 开发环境
       if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        window.__API_BASE_URL__ = 'http://localhost:3000/api'
+        window.__API_BASE_URL__ = 'http://localhost:43000/api'
       } else {
         // 生产环境 - 需要替换为你的实际 API 地址
         window.__API_BASE_URL__ = 'https://api.your-domain.com/api'

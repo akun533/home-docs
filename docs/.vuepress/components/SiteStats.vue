@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     async loadStats() {
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:3000/api';
+      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
       
       try {
         // 获取访问量统计

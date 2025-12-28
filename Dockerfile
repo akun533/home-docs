@@ -56,7 +56,7 @@ RUN mkdir -p /run/nginx /var/log/nginx /app/server/db
 RUN chown -R node:node /app/server/db
 
 # 暴露端口
-EXPOSE 80 3000
+EXPOSE 80 43000
 
 # 创建启动脚本
 RUN echo '#!/bin/sh' > /app/start.sh && \

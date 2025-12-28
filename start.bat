@@ -29,8 +29,8 @@ if not exist "server\.env" (
 
 echo [3/3] 启动服务...
 echo.
-echo 正在启动后端服务 (http://localhost:3000)
-echo 正在启动前端服务 (http://localhost:8080)
+echo 正在启动后端服务 (http://localhost:43000)
+echo 正在启动前端服务 (http://localhost:48080)
 echo.
 echo 按 Ctrl+C 停止所有服务
 echo ====================================
@@ -43,7 +43,7 @@ start "前端服务" cmd /k "npm run docs:dev"
 
 echo.
 echo 服务启动完成！
-echo 前端: http://localhost:8080
-echo 后端: http://localhost:3000
+echo 前端: http://localhost:48080
+echo 后端: http://localhost:43000
 echo.
 pause

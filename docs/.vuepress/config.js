@@ -9,6 +9,10 @@ export default defineUserConfig({
   title: 'Akun',
   description: '这是我的第一个 VuePress 站点',
   base: '/', // 如果部署到 https://username.github.io/repo/ 则设置为 '/repo/'
+  
+  // 开发服务器配置
+  port: 48080,
+  host: '0.0.0.0',
 
   // 主题配置
   theme: hopeTheme({
