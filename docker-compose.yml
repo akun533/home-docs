@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  ai-docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-docs:latest
+    container_name: ai-docs-app
+    ports:
+      - "8080:80"
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - ALLOWED_ORIGINS=http://localhost:8080,http://localhost
+    volumes:
+      # 持久化数据库文件
+      - ./data:/app/server/db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+# 数据卷
+volumes:
+  data:
+    driver: local

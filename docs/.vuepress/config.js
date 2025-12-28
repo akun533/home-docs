@@ -1,11 +1,12 @@
 import { viteBundler } from '@vuepress/bundler-vite'
 import { hopeTheme } from 'vuepress-theme-hope'
 import { defineUserConfig } from 'vuepress'
+import autoArticleFooter from './plugins/auto-article-footer.js'
 
 export default defineUserConfig({
   // 站点配置
   lang: 'zh-CN',
-  title: '我的个人博客',
+  title: 'Akun',
   description: '这是我的第一个 VuePress 站点',
   base: '/', // 如果部署到 https://username.github.io/repo/ 则设置为 '/repo/'
 
@@ -42,7 +43,6 @@ export default defineUserConfig({
       },
       {
         text: '前端技术',
-        icon: 'code',
         children: [
           {
             text: 'Vue.js',
@@ -62,7 +62,6 @@ export default defineUserConfig({
       },
       {
         text: '后端技术',
-        icon: 'server',
         children: [
           { text: 'Node.js/Express', link: '/category/express/' },
           { text: 'Java', link: '/category/java/' },
@@ -71,7 +70,6 @@ export default defineUserConfig({
       },
       {
         text: '服务器运维',
-        icon: 'terminal',
         children: [
           { text: 'Linux', link: '/category/linux/' },
           { text: 'Docker', link: '/category/docker/' },
@@ -82,28 +80,15 @@ export default defineUserConfig({
       {
         text: '游戏攻略',
         link: '/category/游戏攻略/',
-        icon: 'gamepad',
       },
       {
         text: '分类',
         link: '/category/',
-        icon: 'folder',
       },
       {
-        text: '标签',
-        link: '/tag/',
-        icon: 'tag',
-      },
-      {
-        text: '时间轴',
-        link: '/timeline/',
-        icon: 'clock',
-      },
-      {
-        text: '关于',
+        text: '关于我',
         link: '/about/',
-        icon: 'user',
-      },
+      }
     ],
 
     // 侧边栏
@@ -190,4 +175,15 @@ export default defineUserConfig({
 
   // 打包工具
   bundler: viteBundler(),
+  
+  // 插件
+  plugins: [
+    autoArticleFooter,
+  ],
+  
+  // 定义全局常量，可在客户端使用
+  define: {
+    __VUE_OPTIONS_API__: true,
+    __VUE_PROD_DEVTOOLS__: false,
+  },
 })
