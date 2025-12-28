@@ -152,6 +152,7 @@ export default defineUserConfig({
         // sitemap: false,
         changefreq: 'daily',
         excludeUrls: ['/404.html'],
+        hostname: 'https://akun.cpolar.top',
       },
     },
 
