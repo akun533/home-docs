@@ -4,7 +4,7 @@ services:
   ai-docs-dev:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     image: ai-docs:dev
     container_name: ai-docs-dev
     ports:
@@ -15,19 +15,17 @@ services:
       - PORT=3000
       - ALLOWED_ORIGINS=http://localhost:8080,http://localhost
     volumes:
-      # 持久化数据库文件
-      - ./data:/app/server/db
-      # 挂载文档目录（需要在容器内重新构建）
+      # 映射数据库文件到外部
+      - ./data:/app/server/db/data
+      # 映射文档目录，实现热更新
       - ./docs:/app/docs
-      # 挂载构建脚本
+      # 映射后端代码
+      - ./server:/app/server
+      # 映射构建脚本
       - ./add-footer-to-articles.js:/app/add-footer-to-articles.js
+      # 映射 package.json
+      - ./package.json:/app/package.json
     restart: unless-stopped
-    command: >
-      sh -c "
-        echo '开发模式：检测到文档变化时需手动重新构建' &&
-        nginx &&
-        cd /app/server && node app.js
-      "
 
 # 数据卷
 volumes:

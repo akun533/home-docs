@@ -1,0 +1,91 @@
+# 开发环境 Dockerfile - 支持热更新
+
+FROM node:20-alpine
+
+# 安装 nginx 和文件监控工具
+RUN apk add --no-cache nginx inotify-tools
+
+WORKDIR /app
+
+# 复制前端依赖文件并安装
+COPY package*.json ./
+RUN npm install
+
+# 复制后端依赖文件并安装
+COPY server/package*.json ./server/
+RUN cd server && npm install
+
+# 创建必要的目录
+RUN mkdir -p /run/nginx /var/log/nginx /app/server/db /usr/share/nginx/html
+
+# 复制 nginx 配置
+COPY nginx.docker.conf /etc/nginx/http.d/default.conf
+
+# 复制后端代码（会被 volume 覆盖，但提供默认文件）
+COPY server ./server
+
+# 暴露端口
+EXPOSE 80 3000
+
+# 创建热更新启动脚本
+RUN cat > /app/start-dev.sh <<'EOF'
+#!/bin/sh
+set -e
+
+echo "=========================================="
+echo "开发模式启动中..."
+echo "=========================================="
+
+# 首次构建
+echo "正在构建前端文档..."
+cd /app
+npm run docs:build
+cp -r docs/.vuepress/dist/* /usr/share/nginx/html/
+echo "前端构建完成！"
+
+# 启动 nginx
+echo "启动 Nginx..."
+nginx
+
+# 启动后端服务（后台）
+echo "启动后端服务..."
+cd /app/server
+node app.js &
+
+# 监控文件变化并自动重建
+echo "=========================================="
+echo "开始监控文件变化..."
+echo "监控目录: /app/docs"
+echo "文档访问: http://localhost:8080"
+echo "API 服务: http://localhost:3000"
+echo "=========================================="
+
+# 使用 inotifywait 监控文件变化
+while true; do
+    inotifywait -r -e modify,create,delete,move /app/docs && {
+        echo ""
+        echo "=========================================="
+        echo "检测到文件变化，重新构建中..."
+        echo "时间: $(date '+%Y-%m-%d %H:%M:%S')"
+        echo "=========================================="
+        cd /app
+        npm run docs:build && {
+            cp -r docs/.vuepress/dist/* /usr/share/nginx/html/
+            echo "✅ 构建成功！刷新浏览器查看更新"
+            echo "=========================================="
+        } || {
+            echo "❌ 构建失败，请检查错误信息"
+            echo "=========================================="
+        }
+    }
+done
+EOF
+
+RUN chmod +x /app/start-dev.sh
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://localhost/health || exit 1
+
+# 启动开发服务
+CMD ["/app/start-dev.sh"]
