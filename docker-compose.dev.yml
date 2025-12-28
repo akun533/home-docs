@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  ai-docs-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-docs:dev
+    container_name: ai-docs-dev
+    ports:
+      - "8080:80"
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - ALLOWED_ORIGINS=http://localhost:8080,http://localhost
+    volumes:
+      # 持久化数据库文件
+      - ./data:/app/server/db
+      # 挂载文档目录（需要在容器内重新构建）
+      - ./docs:/app/docs
+      # 挂载构建脚本
+      - ./add-footer-to-articles.js:/app/add-footer-to-articles.js
+    restart: unless-stopped
+    command: >
+      sh -c "
+        echo '开发模式：检测到文档变化时需手动重新构建' &&
+        nginx &&
+        cd /app/server && node app.js
+      "
+
+# 数据卷
+volumes:
+  data:
+    driver: local

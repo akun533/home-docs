@@ -8,8 +8,8 @@ WORKDIR /app
 # 复制前端依赖文件
 COPY package*.json ./
 
-# 安装前端依赖
-RUN npm ci --only=production
+# 安装前端依赖（包含开发依赖，因为 VuePress 在 devDependencies 中）
+RUN npm ci
 
 # 复制前端源码
 COPY docs ./docs
