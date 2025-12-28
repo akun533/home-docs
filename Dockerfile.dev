@@ -21,6 +21,9 @@ RUN mkdir -p /run/nginx /var/log/nginx /app/server/db /usr/share/nginx/html
 # 复制 nginx 配置
 COPY nginx.docker.conf /etc/nginx/http.d/default.conf
 
+# 复制 VuePress 配置文件（避免构建时找不到配置）
+COPY docs/.vuepress ./docs/.vuepress
+
 # 复制后端代码（会被 volume 覆盖，但提供默认文件）
 COPY server ./server
 
