@@ -194,7 +194,17 @@ export default defineUserConfig({
   }),
 
   // 打包工具
-  bundler: viteBundler(),
+  bundler: viteBundler({
+    viteOptions: {
+      server: {
+        allowedHosts: [
+          'akun.cpolar.top',
+          '192.168.101.6',
+          'localhost',
+        ],
+      },
+    },
+  }),
   
   // 插件
   plugins: [
