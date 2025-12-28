@@ -1,7 +1,7 @@
 # 多阶段构建 Dockerfile
 
 # ==================== 阶段 1: 构建前端 ====================
-FROM node:18-alpine AS frontend-builder
+FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ COPY add-footer-to-articles.js ./
 RUN npm run docs:build
 
 # ==================== 阶段 2: 构建后端 ====================
-FROM node:18-alpine AS backend-builder
+FROM node:20-alpine AS backend-builder
 
 WORKDIR /app/server
 
@@ -33,7 +33,7 @@ RUN npm ci --only=production
 COPY server ./
 
 # ==================== 阶段 3: 生产环境 ====================
-FROM node:18-alpine
+FROM node:20-alpine
 
 # 安装 nginx
 RUN apk add --no-cache nginx
