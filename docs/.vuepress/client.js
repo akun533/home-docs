@@ -22,7 +22,7 @@ export default defineClientConfig({
         window.__API_BASE_URL__ = 'http://localhost:43000/api'
       } else {
         // 生产环境 - 需要替换为你的实际 API 地址
-        window.__API_BASE_URL__ = 'https://api.your-domain.com/api'
+        window.__API_BASE_URL__ = 'http://localhost:43000/api'
       }
     }
   },
