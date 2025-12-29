@@ -14,9 +14,39 @@ const PORT = process.env.PORT || 43000;
 app.use(helmet());
 
 // CORS 配置
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : [
+      'http://localhost:48080',
+      'http://127.0.0.1:48080',
+      'http://localhost:8080',
+      'http://127.0.0.1:8080',
+      'https://akun.cpolar.top'
+    ];
+
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:48080'],
-  credentials: true
+  origin: function (origin, callback) {
+    // 允许没有 origin 的请求（如 Postman、移动端等）
+    if (!origin) return callback(null, true);
+
+    // 开发环境允许所有 localhost 和 127.0.0.1
+    if (process.env.NODE_ENV !== 'production') {
+      if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+        return callback(null, true);
+      }
+    }
+
+    // 检查是否在允许列表中
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // 解析 JSON 请求体
