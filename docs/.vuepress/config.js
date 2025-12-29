@@ -9,7 +9,7 @@ export default defineUserConfig({
   title: 'Akun',
   description: '这是我的第一个 VuePress 站点',
   base: '/', // 如果部署到 https://username.github.io/repo/ 则设置为 '/repo/'
-  
+
   // 开发服务器配置
   port: 48080,
   host: '0.0.0.0',
@@ -199,18 +199,18 @@ export default defineUserConfig({
       server: {
         allowedHosts: [
           'akun.cpolar.top',
-          '192.168.101.6',
+          'localhost',
           'localhost',
         ],
       },
     },
   }),
-  
+
   // 插件
   plugins: [
     autoArticleFooter,
   ],
-  
+
   // 定义全局常量，可在客户端使用
   define: {
     __VUE_OPTIONS_API__: true,

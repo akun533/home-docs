@@ -122,7 +122,7 @@ services:
       - --spring.r2dbc.password=openpostgresql
       - --spring.sql.init.platform=postgresql
       # 外部访问地址，请修改为实际的域名或 IP
-      - --halo.external-url=http://192.168.101.6:8090/
+      - --halo.external-url=http://localhost:8090/
 
   halodb:
     image: postgres:15.4
