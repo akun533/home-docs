@@ -26,7 +26,7 @@ export default {
   methods: {
     async trackAndLoadViews() {
       const pageUrl = window.location.pathname;
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
+      const API_BASE = window.__API_BASE_URL__ || '/api';
       
       try {
         // 生成访客 ID
@@ -42,6 +42,11 @@ export default {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ pageUrl, visitorId })
         });
+        
+        if (!response.ok) {
+          console.warn('加载访问量失败: HTTP', response.status);
+          return;
+        }
         
         const data = await response.json();
         if (data.success) {

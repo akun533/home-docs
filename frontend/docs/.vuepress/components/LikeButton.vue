@@ -56,6 +56,12 @@ export default {
         const response = await fetch(
           `${API_BASE}/likes/check?pageUrl=${encodeURIComponent(pageUrl)}&userId=${userId}`
         );
+        
+        if (!response.ok) {
+          console.warn('加载点赞状态失败: HTTP', response.status);
+          return;
+        }
+        
         const data = await response.json();
         
         if (data.success) {
@@ -81,6 +87,11 @@ export default {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ pageUrl, userId })
         });
+        
+        if (!response.ok) {
+          console.warn('点赞操作失败: HTTP', response.status);
+          return;
+        }
         
         const data = await response.json();
         

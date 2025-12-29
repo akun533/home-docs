@@ -163,12 +163,18 @@ export default {
     async loadComments() {
       this.loading = true;
       const pageUrl = window.location.pathname;
-      const API_BASE = window.__API_BASE_URL__ || 'http://47.108.150.157:43000/api';
+      const API_BASE = window.__API_BASE_URL__ || '/api';
 
       try {
         const response = await fetch(
           `${API_BASE}/comments?pageUrl=${encodeURIComponent(pageUrl)}`
         );
+        
+        if (!response.ok) {
+          console.warn('加载评论失败: HTTP', response.status);
+          return;
+        }
+        
         const data = await response.json();
 
         if (data.success) {
@@ -186,7 +192,7 @@ export default {
 
       this.isSubmitting = true;
       const pageUrl = window.location.pathname;
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
+      const API_BASE = window.__API_BASE_URL__ || '/api';
 
       try {
         const response = await fetch(`${API_BASE}/comments`, {
@@ -198,6 +204,11 @@ export default {
           })
         });
 
+        if (!response.ok) {
+          alert('评论失败: HTTP ' + response.status);
+          return;
+        }
+        
         const data = await response.json();
 
         if (data.success) {
@@ -224,7 +235,7 @@ export default {
     async submitReply(commentId) {
       if (!this.replyContent || !this.replyAuthor) return;
 
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
+      const API_BASE = window.__API_BASE_URL__ || '/api';
 
       try {
         const response = await fetch(`${API_BASE}/comments/${commentId}/reply`, {
@@ -236,6 +247,11 @@ export default {
           })
         });
 
+        if (!response.ok) {
+          alert('回复失败: HTTP ' + response.status);
+          return;
+        }
+        
         const data = await response.json();
 
         if (data.success) {
