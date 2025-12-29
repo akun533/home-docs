@@ -1,9 +1,23 @@
+# 依赖
 node_modules
+package-lock.json
+
+# 前端构建缓存
 .temp
 .cache
-docs/.vuepress/.cache
-docs/.vuepress/.temp
-docs/.vuepress/dist
+frontend/docs/.vuepress/.cache
+frontend/docs/.vuepress/.temp
+frontend/docs/.vuepress/dist
+
+# 后端数据
 server/db/data
 server/.env
+data/
+
+# 环境变量
 .env.local
+.env
+
+# 系统文件
+.DS_Store
+Thumbs.db

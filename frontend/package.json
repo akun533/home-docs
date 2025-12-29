@@ -1,0 +1,20 @@
+{
+  "name": "home-docs-frontend",
+  "version": "1.0.0",
+  "description": "VuePress 博客前端",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "keywords": ["vuepress", "blog", "docs"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@vuepress/bundler-vite": "^2.0.0-rc.26",
+    "sass-embedded": "^1.97.1",
+    "vue": "^3.5.13",
+    "vuepress": "^2.0.0-rc.26",
+    "vuepress-theme-hope": "^2.0.0-rc.101"
+  }
+}

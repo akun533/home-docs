@@ -17,14 +17,16 @@ app.use(helmet());
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
   : [
-      'http://47.108.150.157:48080',
-      'http://47.108.150.157:48080',
+      'http://localhost',
+      'http://localhost:80',
+      'http://47.108.150.157',
+      'http://127.0.0.1',
       'https://akun.cpolar.top'
     ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // 允许没有 origin 的请求（如 Postman、移动端等）
+    // 允许没有 origin 的请求（如 Postman、移动端、Nginx 转发等）
     if (!origin) return callback(null, true);
 
     // 开发环境允许所有 localhost 和 127.0.0.1

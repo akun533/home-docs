@@ -1,47 +1,63 @@
-# 开发环境 Dockerfile
+# ============================
+# 生产环境镜像
+# ============================
 FROM node:20-alpine
 
 WORKDIR /app
 
-# 安装 pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# 安装 nginx
+RUN apk add --no-cache nginx
 
 # 复制前端依赖文件
-COPY package.json pnpm-lock.yaml* ./
+COPY frontend/package*.json ./frontend/
 
-# 配置 pnpm 使用淘宝镜像源并安装前端依赖（包含开发依赖）
-RUN pnpm config set registry https://registry.npmmirror.com && \
-    pnpm install --frozen-lockfile || pnpm install
+# 安装前端依赖
+RUN cd frontend && \
+    npm config set registry https://registry.npmmirror.com && \
+    npm install
 
-# 复制后端依赖文件并安装
-COPY server/package.json server/pnpm-lock.yaml* ./server/
-RUN cd server && pnpm config set registry https://registry.npmmirror.com && \
-    pnpm install --frozen-lockfile || pnpm install
+# 复制前端源码
+COPY frontend/ ./frontend/
 
-# 复制所有源码
-COPY docs ./docs
-COPY add-footer-to-articles.js ./
-COPY server ./server
+# 复制后端依赖文件
+COPY server/package*.json ./server/
 
-# 创建必要的目录并设置权限
-RUN mkdir -p /app/server/db /app/docs/.vuepress/.temp /app/docs/.vuepress/.cache && \
+# 安装后端依赖
+RUN cd server && \
+    npm config set registry https://registry.npmmirror.com && \
+    npm install --production
+
+# 复制后端源码
+COPY server/ ./server/
+
+# 复制 Nginx 配置
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# 创建必要的目录
+RUN mkdir -p /app/server/db /var/log/nginx /run/nginx && \
     chown -R node:node /app
 
-# 暴露端口：48080(VuePress开发服务器) 和 43000(后端API)
-EXPOSE 48080 43000
+# 暴露端口
+EXPOSE 80 43000 48080
 
-# 创建启动脚本（同时启动前端开发服务器和后端）
+# 创建启动脚本
 RUN echo '#!/bin/sh' > /app/start.sh && \
-    echo '# 清理 VuePress 缓存' >> /app/start.sh && \
-    echo 'rm -rf /app/docs/.vuepress/.temp/* /app/docs/.vuepress/.cache/*' >> /app/start.sh && \
+    echo 'echo "🚀 Starting services..."' >> /app/start.sh && \
     echo '# 启动后端服务' >> /app/start.sh && \
     echo 'cd /app/server && node app.js &' >> /app/start.sh && \
-    echo '# 启动前端服务' >> /app/start.sh && \
-    echo 'cd /app && pnpm run docs:dev -- --host 0.0.0.0 --port 48080' >> /app/start.sh && \
+    echo 'echo "✅ Backend started on port 43000"' >> /app/start.sh && \
+    echo '# 启动前端开发服务' >> /app/start.sh && \
+    echo 'cd /app/frontend && npm run docs:dev -- --host 0.0.0.0 --port 48080 &' >> /app/start.sh && \
+    echo 'echo "✅ Frontend started on port 48080"' >> /app/start.sh && \
+    echo '# 等待前端服务启动' >> /app/start.sh && \
+    echo 'sleep 5' >> /app/start.sh && \
+    echo '# 启动 Nginx' >> /app/start.sh && \
+    echo 'nginx -g "daemon off;"' >> /app/start.sh && \
     chmod +x /app/start.sh
 
-# 切换到非 root 用户
-USER node
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost/health || exit 1
 
 # 启动服务
 CMD ["/app/start.sh"]

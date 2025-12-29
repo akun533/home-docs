@@ -1,23 +1,33 @@
 {
   "name": "home-docs",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "前后端一体化博客系统",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "server"
+  ],
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "frontend:dev": "cd frontend && npm run docs:dev",
+    "frontend:build": "cd frontend && npm run docs:build",
+    "frontend:install": "cd frontend && npm install",
     "server:dev": "cd server && npm run dev",
     "server:start": "cd server && npm start",
-    "server:install": "cd server && npm install"
+    "server:install": "cd server && npm install",
+    "install:all": "npm run frontend:install && npm run server:install",
+    "dev": "concurrently \"npm run frontend:dev\" \"npm run server:dev\"",
+    "build": "npm run frontend:build",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:restart": "docker-compose restart",
+    "docker:rebuild": "docker-compose up -d --build"
   },
-  "keywords": [],
+  "keywords": ["blog", "vuepress", "express", "fullstack"],
   "author": "",
-  "license": "ISC",
-  "description": "",
+  "license": "MIT",
   "devDependencies": {
-    "@vuepress/bundler-vite": "^2.0.0-rc.26",
-    "sass-embedded": "^1.97.1",
-    "vue": "^3.5.13",
-    "vuepress": "^2.0.0-rc.26",
-    "vuepress-theme-hope": "^2.0.0-rc.101"
+    "concurrently": "^8.2.2"
   }
 }
