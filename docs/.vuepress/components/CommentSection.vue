@@ -7,10 +7,10 @@
         <span class="count">({{ comments.length }})</span>
       </h3>
     </div>
-    
+
     <!-- 评论表单 -->
     <div class="comment-form">
-      <textarea 
+      <textarea
         v-model="newComment.content"
         placeholder="写下你的评论..."
         rows="4"
@@ -18,25 +18,25 @@
       ></textarea>
       <div class="form-footer">
         <div class="user-info">
-          <input 
-            v-model="newComment.author" 
-            type="text" 
-            placeholder="昵称 *" 
+          <input
+            v-model="newComment.author"
+            type="text"
+            placeholder="昵称 *"
             required
           />
-          <input 
-            v-model="newComment.email" 
-            type="email" 
+          <input
+            v-model="newComment.email"
+            type="email"
             placeholder="邮箱（可选）"
           />
-          <input 
-            v-model="newComment.website" 
-            type="url" 
+          <input
+            v-model="newComment.website"
+            type="url"
             placeholder="网站（可选）"
           />
         </div>
-        <button 
-          class="submit-btn" 
+        <button
+          class="submit-btn"
           @click="submitComment"
           :disabled="!canSubmit || isSubmitting"
         >
@@ -45,7 +45,7 @@
       </div>
       <div class="char-count">{{ newComment.content.length }} / 500</div>
     </div>
-    
+
     <!-- 评论列表 -->
     <div class="comment-list">
       <div v-if="loading" class="loading">加载中...</div>
@@ -53,9 +53,9 @@
         暂无评论，来抢个沙发吧！
       </div>
       <div v-else>
-        <div 
-          v-for="comment in comments" 
-          :key="comment.id" 
+        <div
+          v-for="comment in comments"
+          :key="comment.id"
           class="comment-item"
         >
           <div class="comment-header">
@@ -63,11 +63,11 @@
             <span class="time">{{ formatTime(comment.createdAt) }}</span>
           </div>
           <div class="comment-content">{{ comment.content }}</div>
-          
+
           <!-- 回复列表 -->
           <div v-if="comment.replies && comment.replies.length > 0" class="replies">
-            <div 
-              v-for="reply in comment.replies" 
+            <div
+              v-for="reply in comment.replies"
               :key="reply.id"
               class="reply-item"
             >
@@ -78,30 +78,30 @@
               <div class="comment-content">{{ reply.content }}</div>
             </div>
           </div>
-          
+
           <!-- 回复按钮 -->
-          <button 
-            class="reply-btn" 
+          <button
+            class="reply-btn"
             @click="toggleReplyForm(comment.id)"
           >
             {{ replyingTo === comment.id ? '取消回复' : '回复' }}
           </button>
-          
+
           <!-- 回复表单 -->
           <div v-if="replyingTo === comment.id" class="reply-form">
-            <textarea 
+            <textarea
               v-model="replyContent"
               placeholder="写下你的回复..."
               rows="3"
             ></textarea>
             <div class="reply-footer">
-              <input 
-                v-model="replyAuthor" 
-                type="text" 
+              <input
+                v-model="replyAuthor"
+                type="text"
                 placeholder="昵称 *"
               />
-              <button 
-                class="submit-btn small" 
+              <button
+                class="submit-btn small"
                 @click="submitReply(comment.id)"
                 :disabled="!replyContent || !replyAuthor"
               >
@@ -148,29 +148,29 @@ export default {
       const author = localStorage.getItem('commentAuthor');
       const email = localStorage.getItem('commentEmail');
       const website = localStorage.getItem('commentWebsite');
-      
+
       if (author) this.newComment.author = author;
       if (email) this.newComment.email = email;
       if (website) this.newComment.website = website;
     },
-    
+
     saveUserInfo() {
       localStorage.setItem('commentAuthor', this.newComment.author);
       localStorage.setItem('commentEmail', this.newComment.email || '');
       localStorage.setItem('commentWebsite', this.newComment.website || '');
     },
-    
+
     async loadComments() {
       this.loading = true;
       const pageUrl = window.location.pathname;
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
-      
+      const API_BASE = window.__API_BASE_URL__ || 'http://47.108.150.157:43000/api';
+
       try {
         const response = await fetch(
           `${API_BASE}/comments?pageUrl=${encodeURIComponent(pageUrl)}`
         );
         const data = await response.json();
-        
+
         if (data.success) {
           this.comments = data.data.reverse(); // 最新的在前
         }
@@ -180,14 +180,14 @@ export default {
         this.loading = false;
       }
     },
-    
+
     async submitComment() {
       if (!this.canSubmit || this.isSubmitting) return;
-      
+
       this.isSubmitting = true;
       const pageUrl = window.location.pathname;
       const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
-      
+
       try {
         const response = await fetch(`${API_BASE}/comments`, {
           method: 'POST',
@@ -197,9 +197,9 @@ export default {
             ...this.newComment
           })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.success) {
           this.saveUserInfo();
           this.newComment.content = '';
@@ -214,18 +214,18 @@ export default {
         this.isSubmitting = false;
       }
     },
-    
+
     toggleReplyForm(commentId) {
       this.replyingTo = this.replyingTo === commentId ? null : commentId;
       this.replyContent = '';
       this.replyAuthor = this.newComment.author || '';
     },
-    
+
     async submitReply(commentId) {
       if (!this.replyContent || !this.replyAuthor) return;
-      
+
       const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
-      
+
       try {
         const response = await fetch(`${API_BASE}/comments/${commentId}/reply`, {
           method: 'POST',
@@ -235,9 +235,9 @@ export default {
             author: this.replyAuthor
           })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.success) {
           this.replyingTo = null;
           this.replyContent = '';
@@ -250,21 +250,21 @@ export default {
         alert('回复失败，请稍后重试');
       }
     },
-    
+
     formatTime(time) {
       const date = new Date(time);
       const now = new Date();
       const diff = now - date;
-      
+
       const minute = 60 * 1000;
       const hour = 60 * minute;
       const day = 24 * hour;
-      
+
       if (diff < minute) return '刚刚';
       if (diff < hour) return Math.floor(diff / minute) + ' 分钟前';
       if (diff < day) return Math.floor(diff / hour) + ' 小时前';
       if (diff < 30 * day) return Math.floor(diff / day) + ' 天前';
-      
+
       return date.toLocaleDateString('zh-CN');
     }
   }
@@ -476,15 +476,15 @@ textarea:focus {
   .comment-section {
     padding: 16px;
   }
-  
+
   .form-footer {
     flex-direction: column;
   }
-  
+
   .user-info {
     flex-direction: column;
   }
-  
+
   .submit-btn {
     width: 100%;
   }

@@ -200,7 +200,7 @@ export default defineUserConfig({
         allowedHosts: [
           'akun.cpolar.top',
           'localhost',
-          'localhost',
+          '47.108.150.157',
         ],
       },
     },

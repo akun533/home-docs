@@ -17,10 +17,8 @@ app.use(helmet());
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
   : [
-      'http://localhost:48080',
-      'http://127.0.0.1:48080',
-      'http://localhost:8080',
-      'http://127.0.0.1:8080',
+      'http://47.108.150.157:48080',
+      'http://47.108.150.157:48080',
       'https://akun.cpolar.top'
     ];
 
