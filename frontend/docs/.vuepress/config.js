@@ -52,6 +52,7 @@ export default defineUserConfig({
           {
             text: 'Vue.js',
             children: [
+              { text: '构建工具', link: '/category/build-tools/' },
               { text: 'Vue 2', link: '/category/vue2/' },
               { text: 'Vue 3', link: '/category/vue3/' },
             ],

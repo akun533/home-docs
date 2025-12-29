@@ -1,5 +1,5 @@
 ---
-title: 1Panel 使用 Docker Compose 部署 Halo 博客系统
+title: Docker Compose 部署 Halo
 icon: docker
 date: 2025-12-29
 category:

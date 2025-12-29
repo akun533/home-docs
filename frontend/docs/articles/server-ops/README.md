@@ -23,4 +23,4 @@ article: false
 
 ## 最新文章
 
-- [Docker 部署 v2rayA 代理服务](v2raya-docker-deploy.md)
+- [Docker 部署 v2rayA 代理服务](nas/v2raya-docker-deploy.md)
