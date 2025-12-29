@@ -2,6 +2,7 @@
   <ClientOnly>
     <div class="like-button-wrapper">
       <button 
+        ref="buttonRef"
         class="like-button" 
         :class="{ liked: hasLiked, loading: isLoading }"
         @click="toggleLike"
@@ -16,13 +17,21 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
   name: 'LikeButton',
-  data() {
+  setup() {
+    const count = ref(0)
+    const hasLiked = ref(false)
+    const isLoading = ref(false)
+    const buttonRef = ref(null)
+    
     return {
-      count: 0,
-      hasLiked: false,
-      isLoading: false
+      count,
+      hasLiked,
+      isLoading,
+      buttonRef
     }
   },
   mounted() {
@@ -41,7 +50,7 @@ export default {
     async loadLikeStatus() {
       const pageUrl = window.location.pathname;
       const userId = this.getUserId();
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
+      const API_BASE = window.__API_BASE_URL__ || '/api';
       
       try {
         const response = await fetch(
@@ -64,7 +73,7 @@ export default {
       this.isLoading = true;
       const pageUrl = window.location.pathname;
       const userId = this.getUserId();
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
+      const API_BASE = window.__API_BASE_URL__ || '/api';
       
       try {
         const response = await fetch(`${API_BASE}/likes/toggle`, {
@@ -80,10 +89,12 @@ export default {
           this.hasLiked = data.data.hasLiked;
           
           // 动画效果
-          this.$el.querySelector('.like-button').classList.add('bounce');
-          setTimeout(() => {
-            this.$el.querySelector('.like-button')?.classList.remove('bounce');
-          }, 600);
+          if (this.buttonRef) {
+            this.buttonRef.classList.add('bounce');
+            setTimeout(() => {
+              this.buttonRef?.classList.remove('bounce');
+            }, 600);
+          }
         }
       } catch (error) {
         console.error('点赞操作失败:', error);
