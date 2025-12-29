@@ -1,5 +1,5 @@
-// API 基础配置
-const API_BASE_URL = 'http://localhost:43000/api';
+// API 基础配置（通过 Nginx 转发）
+const API_BASE_URL = '/api';
 
 // 生成用户唯一ID（保存在 localStorage）
 function getUserId() {
