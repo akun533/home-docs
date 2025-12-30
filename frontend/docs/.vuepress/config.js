@@ -88,10 +88,6 @@ export default defineUserConfig({
         link: '/category/游戏攻略/',
       },
       {
-        text: '分类',
-        link: '/category/',
-      },
-      {
         text: '关于我',
         link: '/about/',
       }
