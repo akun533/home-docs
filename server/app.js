@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const { initDatabase } = require('./db');
 const commentRoutes = require('./routes/comments');
 const likeRoutes = require('./routes/likes');
 const analyticsRoutes = require('./routes/analytics');
@@ -86,9 +87,22 @@ app.use((req, res) => {
 });
 
 // 启动服务器
-app.listen(PORT, () => {
-  console.log(`🚀 服务器运行在 http://localhost:${PORT}`);
-  console.log(`📊 环境: ${process.env.NODE_ENV || 'development'}`);
-});
+async function startServer() {
+  try {
+    // 初始化数据库
+    await initDatabase();
+    
+    // 启动HTTP服务
+    app.listen(PORT, () => {
+      console.log(`🚀 服务器运行在 http://localhost:${PORT}`);
+      console.log(`📊 环境: ${process.env.NODE_ENV || 'development'}`);
+    });
+  } catch (error) {
+    console.error('❌ 服务器启动失败:', error);
+    process.exit(1);
+  }
+}
+
+startServer();
 
 module.exports = app;
