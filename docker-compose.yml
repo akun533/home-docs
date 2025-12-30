@@ -1,6 +1,28 @@
 version: '3.8'
 
 services:
+  # PostgreSQL 数据库服务
+  postgres:
+    image: registry.cn-hangzhou.aliyuncs.com/zhangshier/postgres:15-alpine
+    container_name: home-docs-postgres
+    environment:
+      POSTGRES_DB: homedocs
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres123}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - homedocs-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # 前后端一体化服务
   app:
     build:
@@ -11,11 +33,23 @@ services:
       - "80:80"
       - "43000:43000"
     volumes:
-      - ./data:/app/server/db
+      - ./data:/app/data
     environment:
       - NODE_ENV=production
       - PORT=43000
       - ALLOWED_ORIGINS=http://localhost,http://localhost:80,http://47.108.150.157
+      # PostgreSQL 数据库配置
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=homedocs
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-postgres123}
+      - ADMIN_KEY=${ADMIN_KEY:-admin_secret_key}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - homedocs-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
@@ -23,3 +57,11 @@ services:
       timeout: 3s
       retries: 3
       start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  homedocs-network:
+    driver: bridge

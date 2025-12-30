@@ -1,7 +1,8 @@
 # ============================
 # 生产环境镜像
 # ============================
-FROM node:20-alpine
+# 使用阿里云镜像加速
+FROM registry.cn-hangzhou.aliyuncs.com/google_containers/node:20-alpine
 
 WORKDIR /app
 
