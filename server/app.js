@@ -9,7 +9,7 @@ const likeRoutes = require('./routes/likes');
 const analyticsRoutes = require('./routes/analytics');
 
 const app = express();
-const PORT = process.env.PORT || 43000;
+const PORT = process.env.PORT || 3000;
 
 // 安全中间件
 app.use(helmet());

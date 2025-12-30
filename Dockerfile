@@ -39,17 +39,17 @@ RUN mkdir -p /app/server/db /var/log/nginx /run/nginx && \
     chown -R node:node /app
 
 # 暴露端口
-EXPOSE 80 43000 48080
+EXPOSE 80 3000 8080
 
 # 创建启动脚本
 RUN echo '#!/bin/sh' > /app/start.sh && \
     echo 'echo "🚀 Starting services..."' >> /app/start.sh && \
     echo '# 启动后端服务' >> /app/start.sh && \
     echo 'cd /app/server && node app.js &' >> /app/start.sh && \
-    echo 'echo "✅ Backend started on port 43000"' >> /app/start.sh && \
+    echo 'echo "✅ Backend started on port 3000"' >> /app/start.sh && \
     echo '# 启动前端开发服务' >> /app/start.sh && \
-    echo 'cd /app/frontend && npm run docs:dev -- --host 0.0.0.0 --port 48080 &' >> /app/start.sh && \
-    echo 'echo "✅ Frontend started on port 48080"' >> /app/start.sh && \
+    echo 'cd /app/frontend && npm run docs:dev -- --host 0.0.0.0 --port 8080 &' >> /app/start.sh && \
+    echo 'echo "✅ Frontend started on port 8080"' >> /app/start.sh && \
     echo '# 等待前端服务启动' >> /app/start.sh && \
     echo 'sleep 5' >> /app/start.sh && \
     echo '# 启动 Nginx' >> /app/start.sh && \

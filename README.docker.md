@@ -26,9 +26,9 @@ docker-compose up -d --build
 ```
 
 访问地址：
-- 前端文档：http://localhost:48080
-- API 服务：http://localhost:43000
-- 健康检查：http://localhost:48080/health
+- 前端文档：http://localhost:8080
+- API 服务：http://localhost:3000
+- 健康检查：http://localhost:8080/health
 
 ### 2. 使用 Docker 命令
 
@@ -39,11 +39,11 @@ docker build -t home-docs:latest .
 # 运行容器
 docker run -d \
   --name home-docs-app \
-  -p 48080:80 \
-  -p 43000:43000 \
+  -p 8080:80 \
+  -p 3000:3000 \
   -e NODE_ENV=production \
-  -e PORT=43000 \
-  -e ALLOWED_ORIGINS=http://localhost:48080 \
+  -e PORT=3000 \
+  -e ALLOWED_ORIGINS=http://localhost:8080 \
   -v $(pwd)/data:/app/server/db \
   home-docs:latest
 
@@ -64,8 +64,8 @@ docker rm home-docs-app
 | 变量名 | 说明 | 默认值 |
 |--------|------|--------|
 | NODE_ENV | 运行环境 | production |
-| PORT | 后端服务端口 | 43000 |
-| ALLOWED_ORIGINS | 允许的跨域来源 | http://localhost:48080 |
+| PORT | 后端服务端口 | 3000 |
+| ALLOWED_ORIGINS | 允许的跨域来源 | http://localhost:8080 |
 
 ## 📦 数据持久化
 
@@ -101,7 +101,7 @@ server {
     ssl_certificate_key /path/to/key.pem;
 
     location / {
-        proxy_pass http://localhost:48080;
+        proxy_pass http://localhost:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -161,7 +161,7 @@ docker logs home-docs-app
 修改 `docker-compose.yml` 中的端口映射：
 ```yaml
 ports:
-  - "48080:80"  # 改为其他端口
+  - "8080:80"  # 改为其他端口
 ```
 
 ### 数据丢失
@@ -173,7 +173,7 @@ docker inspect home-docs-app | grep Mounts -A 10
 ## 📝 注意事项
 
 - 首次启动可能需要几分钟构建时间
-- 确保宿主机的 48080 和 43000 端口未被占用
+- 确保宿主机的 8080 和 3000 端口未被占用
 - 数据库文件会自动创建在 `./data` 目录
 - 建议在生产环境使用专业的数据库服务（如 MongoDB、PostgreSQL）
 

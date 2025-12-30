@@ -10,7 +10,7 @@
             <div class="stat-label">总访问量</div>
           </div>
         </div>
-        
+
         <div class="stat-item">
           <div class="stat-icon">❤️</div>
           <div class="stat-info">
@@ -18,7 +18,7 @@
             <div class="stat-label">总点赞数</div>
           </div>
         </div>
-        
+
         <div class="stat-item">
           <div class="stat-icon">💬</div>
           <div class="stat-info">
@@ -26,7 +26,7 @@
             <div class="stat-label">总评论数</div>
           </div>
         </div>
-        
+
         <div class="stat-item">
           <div class="stat-icon">📄</div>
           <div class="stat-info">
@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-      
+
       <div v-if="topPages.length > 0" class="top-pages">
         <h4>🔥 热门文章 Top 5</h4>
         <div class="top-page-list">
@@ -68,33 +68,33 @@ export default {
   },
   methods: {
     async loadStats() {
-      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:43000/api';
-      
+      const API_BASE = window.__API_BASE_URL__ || 'http://localhost:3000/api';
+
       try {
         // 获取访问量统计
         const analyticsRes = await fetch(`${API_BASE}/analytics/stats`);
         const analyticsData = await analyticsRes.json();
-        
+
         if (analyticsData.success) {
           this.totalViews = analyticsData.data.totalViews || 0;
           this.totalPages = analyticsData.data.totalPages || 0;
           this.topPages = analyticsData.data.topPages || [];
         }
-        
+
         // 获取点赞总数
         const likesRes = await fetch(`${API_BASE}/likes/total`);
         const likesData = await likesRes.json();
         if (likesData.success) {
           this.totalLikes = likesData.data.totalLikes || 0;
         }
-        
+
         // 获取评论总数
         const commentsRes = await fetch(`${API_BASE}/comments/total`);
         const commentsData = await commentsRes.json();
         if (commentsData.success) {
           this.totalComments = commentsData.data.totalComments || 0;
         }
-        
+
       } catch (error) {
         console.error('加载统计数据失败:', error);
       } finally {
@@ -235,16 +235,16 @@ export default {
   .site-stats {
     padding: 16px;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  
+
   .stat-value {
     font-size: 24px;
   }
-  
+
   .stat-icon {
     font-size: 28px;
   }

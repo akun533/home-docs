@@ -11,7 +11,7 @@ export default defineUserConfig({
   base: '/', // 如果部署到 https://username.github.io/repo/ 则设置为 '/repo/'
 
   // 开发服务器配置
-  port: 48080,
+  port: 8080,
   host: '0.0.0.0',
 
   // 主题配置

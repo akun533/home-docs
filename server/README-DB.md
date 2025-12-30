@@ -19,7 +19,7 @@ CREATE DATABASE homedocs;
 
 ```env
 # 服务器配置
-PORT=43000
+PORT=3000
 NODE_ENV=development
 
 # PostgreSQL 数据库配置
