@@ -2,6 +2,7 @@ import { viteBundler } from '@vuepress/bundler-vite'
 import { hopeTheme } from 'vuepress-theme-hope'
 import { defineUserConfig } from 'vuepress'
 import autoArticleFooter from './plugins/auto-article-footer.js'
+import { generateNavbar } from './utils/navbar-generator.js'
 
 export default defineUserConfig({
   // 站点配置
@@ -39,59 +40,8 @@ export default defineUserConfig({
     // 文档目录
     docsDir: 'docs',
 
-    // 导航栏
-    navbar: [
-      {
-        text: '首页',
-        link: '/',
-        icon: 'home',
-      },
-      {
-        text: '前端技术',
-        children: [
-          {
-            text: 'Vue.js',
-            children: [
-              { text: '构建工具', link: '/category/build-tools/' },
-              { text: 'Vue 2', link: '/category/vue2/' },
-              { text: 'Vue 3', link: '/category/vue3/' },
-            ],
-          },
-          {
-            text: '前端工程化',
-            children: [
-              { text: '构建工具', link: '/category/构建工具/' },
-              { text: '前端架构', link: '/category/前端架构/' },
-            ],
-          },
-        ],
-      },
-      {
-        text: '后端技术',
-        children: [
-          { text: 'Node.js/Express', link: '/category/express/' },
-          { text: 'Java', link: '/category/java/' },
-          { text: '数据库', link: '/category/数据库/' },
-        ],
-      },
-      {
-        text: '服务器运维',
-        children: [
-          { text: 'Linux', link: '/category/linux/' },
-          { text: 'Docker', link: '/category/docker/' },
-          { text: 'Jenkins', link: '/category/jenkins/' },
-          { text: 'NAS', link: '/category/nas/' },
-        ],
-      },
-      {
-        text: '游戏攻略',
-        link: '/category/游戏攻略/',
-      },
-      {
-        text: '关于我',
-        link: '/about/',
-      }
-    ],
+    // 导航栏 - 自动从 articles 目录结构生成
+    navbar: generateNavbar(),
 
     // 侧边栏
     sidebar: {

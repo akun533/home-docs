@@ -1,0 +1,148 @@
+// 自定义样式 - 扩展内容区域宽度
+
+// 覆盖主题默认的最大宽度限制
+.theme-hope-content {
+  max-width: none !important;
+}
+
+// 页面容器宽度调整
+.vp-page {
+  max-width: none !important;
+}
+
+// 主内容区域宽度
+.theme-container {
+  max-width: 100% !important;
+}
+
+// 文章内容区域
+.page {
+  max-width: none !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+
+// 普通页面内容
+.vp-page-content {
+  max-width: none !important;
+}
+
+// 确保主要内容区域充分利用宽度
+main.vp-page {
+  max-width: none !important;
+}
+
+// 博客页面的内容区域
+.blog-page-wrapper {
+  max-width: none !important;
+}
+
+// 文章页面内容
+.theme-hope-content:not(.custom) {
+  max-width: none !important;
+}
+
+// 响应式调整 - 保持移动端友好
+@media (max-width: 959px) {
+  .page {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+@media (max-width: 719px) {
+  .page {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+// ========== 博客首页 Projects 模块样式定制 ==========
+
+// Projects 容器整体样式
+.vp-blog-home .project-panel {
+  // 可以设置整个 projects 区域的背景
+  // background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  // padding: 2rem;
+  // border-radius: 12px;
+}
+
+// 单个 project 卡片的背景色
+.vp-blog-home .project-item {
+  // 默认背景色（浅色模式）
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  
+  // hover 效果
+  &:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3) !important;
+  }
+  
+  // 图标颜色
+  .icon {
+    color: #ffffff !important;
+  }
+  
+  // 标题颜色
+  .name {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+  }
+  
+  // 描述文字颜色
+  .desc {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+}
+
+// 为不同的 project 设置不同的背景色（通过 nth-child）
+.vp-blog-home .project-item:nth-child(1) {
+  // 第一个卡片 - 蓝紫渐变
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.vp-blog-home .project-item:nth-child(2) {
+  // 第二个卡片 - 橙红渐变
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+}
+
+.vp-blog-home .project-item:nth-child(3) {
+  // 第三个卡片 - 青蓝渐变
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+}
+
+.vp-blog-home .project-item:nth-child(4) {
+  // 第四个卡片 - 绿色渐变
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
+}
+
+// 深色模式适配
+html.dark {
+  .vp-blog-home .project-item {
+    // 深色模式下的默认背景
+    background: linear-gradient(135deg, #434343 0%, #000000 100%) !important;
+    
+    &:hover {
+      box-shadow: 0 12px 24px rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+  
+  // 深色模式下的不同卡片颜色
+  .vp-blog-home .project-item:nth-child(1) {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%) !important;
+  }
+  
+  .vp-blog-home .project-item:nth-child(2) {
+    background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%) !important;
+  }
+  
+  .vp-blog-home .project-item:nth-child(3) {
+    background: linear-gradient(135deg, #2c3e50 0%, #1abc9c 100%) !important;
+  }
+  
+  .vp-blog-home .project-item:nth-child(4) {
+    background: linear-gradient(135deg, #2c3e50 0%, #27ae60 100%) !important;
+  }
+}
