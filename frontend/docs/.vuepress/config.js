@@ -22,7 +22,7 @@ export default defineUserConfig({
 
     // 作者信息
     author: {
-      name: '博主',
+      name: 'Akun',
       url: 'https://akun.cpolar.top',
       email: '122915623@qq.com',
     },
