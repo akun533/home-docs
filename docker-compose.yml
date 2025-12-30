@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # PostgreSQL 数据库服务
   postgres:
-    image: registry.cn-hangzhou.aliyuncs.com/zhangshier/postgres:15-alpine
+    image: postgres:15-alpine
     container_name: home-docs-postgres
     environment:
       POSTGRES_DB: homedocs

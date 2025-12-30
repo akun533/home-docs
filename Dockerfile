@@ -1,8 +1,8 @@
 # ============================
 # 生产环境镜像
 # ============================
-# 使用阿里云镜像加速
-FROM registry.cn-hangzhou.aliyuncs.com/google_containers/node:20-alpine
+# 使用官方镜像（配置镜像加速器后可正常拉取）
+FROM node:20-alpine
 
 WORKDIR /app
 
